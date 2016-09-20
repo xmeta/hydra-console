@@ -1,0 +1,50 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-input/iron-input.html">
+<link rel="import" href="../iron-ajax/iron-ajax.html">
+
+<!--
+`hydra-console`
+
+
+@demo demo/index.html
+-->
+
+<dom-module id="hydra-console">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <input value="{{url::input}}">
+    <iron-ajax
+    auto
+    url="{{url}}"
+    handle-as="json"
+    on-response="handleResponse"
+    last-response="{{ajaxResponse}}"></iron-ajax>
+    <pre><code>{{_stringify(ajaxResponse)}}</code></pre>
+  </template>
+
+  <script>
+    Polymer({
+      is: "hydra-console",
+
+      properties: {
+        // declare properties for the element's public API
+        url: {
+          type: String,
+          value: ""
+        },
+        ajaxResponse: {
+          type: String
+        }
+      },
+      handleResponse: function(e) {
+      },
+      _stringify: function(target) {
+        return JSON.stringify(target, null , "\t");
+      }
+    });
+  </script>
+</dom-module>
